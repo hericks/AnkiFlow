@@ -25,7 +25,8 @@ def math_node_to_text(self, node):
 
     elif self.math_mode == 'with-delimiters':
         with _PushEquationContext(self):
-            content_lines = node.latex_verbatim()[len(node.delimiters[0]):-len(node.delimiters[1])].splitlines()
+            delims = node.delimiters if node.isNodeType(latexwalker.LatexMathNode) else (r'\begin{%s}' % (node.environmentname), r'\end{%s}' % (node.environmentname))
+            content_lines = node.latex_verbatim()[len(delims[0]):-len(delims[1])].splitlines()
             content = ' '.join([line for line in content_lines if line.strip() != ''])
             # content = self.nodelist_to_text(node.nodelist).strip()
         if node.isNodeType(latexwalker.LatexMathNode):
