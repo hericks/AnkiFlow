@@ -109,6 +109,9 @@ def anki_card_to_text(n, l2tobj):
 def textbf_to_text(n, l2tobj):
     return "<b>" + l2tobj.nodelist_to_text(n.nodeargd.argnlist).strip() + "</b>"
 
+def emph_to_text(n, l2tobj):
+    return "<em>" + l2tobj.nodelist_to_text(n.nodeargd.argnlist).strip() + "</em>"
+
 def get_anki_l2t():
     l2t_db = latex2text.get_default_latex_context_db()
     l2t_db.add_context_category(
@@ -119,6 +122,7 @@ def get_anki_l2t():
             latex2text.MacroTextSpec('\\', simplify_repl=newline_to_text),
             latex2text.MacroTextSpec('item', simplify_repl=item_to_text),
             latex2text.MacroTextSpec('textbf', simplify_repl=textbf_to_text),
+            latex2text.MacroTextSpec('emph', simplify_repl=emph_to_text),
         ],
         environments=[
             latex2text.EnvironmentTextSpec('enumerate', simplify_repl=enum_environment_to_text),
